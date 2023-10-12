@@ -22,7 +22,7 @@ def get_running_tasks():
     return get_running_celery_tasks(celery_app_instance)
 
 
-@celery_router.get('tasks/get/{task_id}')
+@celery_router.get('/tasks/get/{task_id}')
 def get_task_state(task_id: str):
     """Статус таска."""
     return UJSONResponse(
@@ -30,7 +30,7 @@ def get_task_state(task_id: str):
     )
 
 
-@celery_router.post('tasks/kill/all')
+@celery_router.post('/tasks/kill/all')
 def kill_all_tasks():
     """Убиваем все таски."""
     killed_tasks = kill_celery_tasks(celery_app=celery_app_instance)
@@ -39,7 +39,7 @@ def kill_all_tasks():
     )
 
 
-@celery_router.post('tasks/kill/ids')
+@celery_router.post('/tasks/kill/ids')
 def kill_tasks_by_ids(task_ids: list[str]):
     """Убиваем таски по ID."""
     killed_tasks = kill_celery_tasks(
