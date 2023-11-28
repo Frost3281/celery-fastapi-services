@@ -29,5 +29,5 @@ class CeleryTaskNoParams(BaseModel):
 class CeleryTask(CeleryTaskNoParams):
     """Данные о таске Celery."""
 
-    args: list[dict[str, ArgsValue]]
-    kwargs: dict[str, Any]
+    args: Union[list[dict[str, ArgsValue]], Any, None] = None
+    kwargs: Union[dict[str, Any], Any, None] = None
