@@ -51,7 +51,10 @@ def celery_result_to_dict(task_result: AsyncResult) -> dict[str, str]:
     }
     if task_result.state in states.EXCEPTION_STATES:
         response_data.update(
-            {'result': saferepr(task_result.result), 'exc': str(task_result.result)},
+            {
+                'result': saferepr(task_result.result),
+                'exc': saferepr(task_result.result),
+            },
         )
     return response_data
 
