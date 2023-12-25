@@ -9,7 +9,7 @@ packages = [{include = "celery_fastapi_routes"}]
 [tool.poetry.dependencies]
 python = "^3.9"
 celery = "^5.3.4"
-fastapi = "0.72.0"
+fastapi = "^0.105.0"
 ujson = "^5.8.0"
 requests = "^2.31.0"
 
