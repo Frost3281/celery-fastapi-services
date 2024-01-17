@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Any, Union
 
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, field_validator
 
 UsualDict = dict[str, str]
 ArgsValue = Union[UsualDict, str]
@@ -18,10 +18,9 @@ class CeleryTaskNoParams(BaseModel):
     acknowledged: bool
     worker_pid: int
 
-    @validator('time_start', pre=True)
-    def convert_float_time_to_dt(
-        cls, time: Union[float, datetime], values,  # noqa: ARG002, N805
-    ) -> datetime:
+    @field_validator('time_start', mode='before')
+    @classmethod
+    def convert_float_time_to_dt(cls, time: Union[float, datetime]) -> datetime:
         """Конвертируем timestamp в datetime."""
         return datetime.fromtimestamp(time) if isinstance(time, float) else time
 

@@ -33,6 +33,8 @@ def get_running_celery_tasks(
 ) -> list[CeleryTask]:
     """Получаем данные по работающим таскам."""
     active_workers = app.control.inspect(timeout=5).active()
+    if not active_workers:
+        return []
     return _celery_tasks_data_to_list(active_workers, task_selector)
 
 
