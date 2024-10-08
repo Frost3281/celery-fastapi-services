@@ -8,7 +8,7 @@ celery_app_instance = Celery(
     broker=CELERY_BROKER_URL,
     backend=CELERY_RESULT_BACKEND,
 )
-celery_app_instance.conf.update(CELERY_TRACK_STARTED=True)
+celery_app_instance.conf.update(task_track_started=True)
 celery_app_instance.conf.broker_transport_options = {
     'visibility_timeout': VISIBILITY_TIMEOUT,
 }
