@@ -1,6 +1,7 @@
 from datetime import datetime
 from typing import Any, Union
 
+import pytz
 from pydantic import BaseModel, field_validator
 
 UsualDict = dict[str, str]
@@ -22,7 +23,9 @@ class CeleryTaskNoParams(BaseModel):
     @classmethod
     def convert_float_time_to_dt(cls, time: Union[float, datetime]) -> datetime:
         """Конвертируем timestamp в datetime."""
-        return datetime.fromtimestamp(time) if isinstance(time, float) else time
+        if isinstance(time, float):
+            return datetime.fromtimestamp(time, tz=pytz.timezone('Europe/Moscow'))
+        return time
 
 
 class CeleryTask(CeleryTaskNoParams):

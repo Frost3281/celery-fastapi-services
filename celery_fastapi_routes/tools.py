@@ -22,14 +22,17 @@ def kill_celery_tasks(
     killed_tasks = []
     for task in get_running_celery_tasks(celery_app, task_selector):
         celery_app.control.revoke(
-            task.id, terminate=True, signal='SIGKILL',
+            task.id,
+            terminate=True,
+            signal='SIGKILL',
         )
         killed_tasks.append(task.id)
     return killed_tasks
 
 
 def get_running_celery_tasks(
-    app: Celery, task_selector: TaskSelector = lambda celery_task: True,  # noqa: ARG005
+    app: Celery,
+    task_selector: TaskSelector = lambda celery_task: True,  # noqa: ARG005
 ) -> list[CeleryTask]:
     """Получаем данные по работающим таскам."""
     active_workers = app.control.inspect(timeout=5).active()
