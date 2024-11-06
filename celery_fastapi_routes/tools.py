@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Any, Callable, Union
 
-from celery import Celery, states
+from celery import Celery, Task, states
 from celery.result import AsyncResult
 from celery.utils.saferepr import saferepr
 
@@ -12,6 +12,23 @@ CeleryTasksDictValue = list[dict[str, str]]
 CeleryTasksDataResponse = dict[str, CeleryTasksDictValue]
 
 TaskSelector = Callable[[CeleryTask], bool]
+
+
+def get_running_id_or_run_new_task(
+    task_name: str,
+    celery_app: Celery,
+    celery_task_to_run: Task,
+    *celery_task_args: Any,  # noqa: ANN401
+    **celery_task_kwargs: Any,  # noqa: ANN401
+) -> str:
+    """Получаем идентификатор запущенной задачи или запускаем новую."""
+    running_tasks = get_running_celery_tasks(
+        celery_app,
+        task_selector=lambda celery_task: celery_task.name == task_name,
+    )
+    if running_tasks:
+        return running_tasks[0].id
+    return celery_task_to_run.delay(*celery_task_args, **celery_task_kwargs).id
 
 
 def kill_celery_tasks(

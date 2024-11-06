@@ -21,6 +21,7 @@ ruff = "^0.4.10"
 pytest = "^7.4.2"
 pytest-celery = "^1.0.0"
 gevent = "^23.9.1"
+types-pytz = "^2024.2.0.20241003"
 
 [build-system]
 requires = ["poetry-core"]
