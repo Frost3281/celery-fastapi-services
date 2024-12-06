@@ -7,7 +7,7 @@ readme = "README.md"
 packages = [{include = "celery_fastapi_routes"}]
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.9"
 celery = "^5.4.0"
 fastapi = "^0.105.0"
 ujson = "^5.8.0"
