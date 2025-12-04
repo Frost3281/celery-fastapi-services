@@ -28,7 +28,9 @@ async def get_task_state(task_id: str):
     """Статус таска."""
     return {
         'message': await run_in_threadpool(
-            get_celery_task_result, task_id, celery_app_instance,
+            get_celery_task_result,
+            task_id,
+            celery_app_instance,
         ),
     }
 
@@ -37,7 +39,8 @@ async def get_task_state(task_id: str):
 async def kill_all_tasks():
     """Убиваем все таски."""
     killed_tasks = await run_in_threadpool(
-        kill_celery_tasks, celery_app=celery_app_instance,
+        kill_celery_tasks,
+        celery_app=celery_app_instance,
     )
     return {'message': 'tasks were killed', 'task_ids': killed_tasks}
 

@@ -1,28 +1,36 @@
-[tool.poetry]
+[project]
 name = "celery-fastapi-routes"
 version = "0.1.0"
 description = ""
-authors = ["Vitaliy Mikhalchenko <Vitaliy.Mikhalchenko@bristolcapital.ru>"]
+authors = []
 readme = "README.md"
-packages = [{include = "celery_fastapi_routes"}]
+requires-python = ">=3.9,<4.0"
+dependencies = [
+    "celery>=5.4.0,<6.0",
+    "fastapi>=0.105.0,<1",
+    "ujson>=5.8.0,<6.0",
+    "requests>=2.31.0,<3.0",
+    "pytz>=2024.1,<2025",
+]
 
-[tool.poetry.dependencies]
-python = "^3.9"
-celery = "^5.4.0"
-fastapi = "^0.105.0"
-ujson = "^5.8.0"
-requests = "^2.31.0"
-pytz = "^2024.1"
-
-
-[tool.poetry.group.dev.dependencies]
-mypy = "^1.10.1"
-ruff = "^0.4.10"
-pytest = "^7.4.2"
-pytest-celery = "^1.0.0"
-gevent = "^23.9.1"
-types-pytz = "^2024.2.0.20241003"
+[dependency-groups]
+dev = [
+    "mypy>=1.10.1,<2.0",
+    "ruff>=0.4.10,<0.5",
+    "pytest>=7.4.2,<8.0",
+    "pytest-celery>=1.0.0,<2.0",
+    "gevent>=23.9.1,<24.0",
+    "types-pytz>=2024.2.0.20241003,<2025",
+]
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = [
+    "celery_fastapi_routes",
+]
+
+[tool.uv]
+allow-insecure-host = ["pypi.org"]
